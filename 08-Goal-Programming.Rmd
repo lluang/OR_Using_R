@@ -1,6 +1,7 @@
 # Goal Programming
 
 ```{r, eval=FALSE, include=FALSE}
+
 library(bookdown); library(rmarkdown); rmarkdown::render("08-Goal-Programming.Rmd", "pdf_book")
 ```
 
@@ -434,7 +435,7 @@ It is useful to take a moment to reflect on why $\sum\limits_{s=1}^{50} \sum\lim
 
 Combined with the variable $x_{s,w}$ being defined to be binary, this is sufficient to ensure that we have a _feasible_ answer but not necessarily a well-balanced solution across the eight weeks.\
 
-We could easily calculate the amount of material to mail each as a function of $x_s,w$  and $C_s$.  For week 1, it would be $\sum\limits_{s=1}^{50}   C_s \cdot x_{s,1}$  For week 2, it would be $\sum\limits_{s=1}^{50}   C_s \cdot x_{s,2}$, and so on.  This could be generalized as $\sum\limits_{s=1}^{50}   C_s \cdot x_{s,w} \; \forall \; w$.\
+We could easily calculate the amount of material to mail each as a function of $x_{s,w}$  and $C_s$.  For week 1, it would be $\sum\limits_{s=1}^{50}   C_s \cdot x_{s,1}$  For week 2, it would be $\sum\limits_{s=1}^{50}   C_s \cdot x_{s,2}$, and so on.  This could be generalized as $\sum\limits_{s=1}^{50}   C_s \cdot x_{s,w} \; \forall \; w$.\
 
 Creating a balanced schedule can be done in multiple ways. Let's start by using the _minimax_ approach discussed earlier. \index{Minimax} To do this, we add a new variable _Q_ and constrain it to be at least as large as each week.  Therefore, for week 1, $Q \geq \sum\limits_{s=1}^{50}   C_s \cdot x_{s,1}$ and for week 2, $Q \geq \sum\limits_{s=1}^{50}   C_s \cdot x_{s,2}$.  Again, to generalize for all eight weeks, we could write $Q \geq \sum\limits_{s=1}^{50}   C_s \cdot x_{s,w} \; \forall \; w$. \
 
@@ -495,7 +496,7 @@ Another useful thing to note is that solving this problem to optimality can take
 
 In fact, I realized that the feasible solution found was very close to the best remaining branches so perhaps this solution was optimal but it was taking a very long time to prove that it was optimal. In any case, it is probably good enough.  Often data may only be accurate to $\pm5\%$ so spending extensive time trying to get significantly more accurate results is not very productive.  This suggests  setting stopping options such as a time limit, number of LPs, or a _good enough_ setting. For this problem, I chose the latter option.
 
-We solved this with a mixed integer programming problem gap limit of $1.5\%$ meaning that while we have not _proven_ this solution to be optimal, we do know that it is impossible to find a solution more than 1.5% better. From a branch and bound algorithm perspective, this means that while we have not searched down fully or pruned every branch, we know that no branch has the potential of being more than $1.5\%$ better than the feasible solution that we have already found.
+We solved this with a mixed integer programming problem gap limit of $15\%$ meaning that while we have not _proven_ this solution to be optimal, we do know that it is impossible to find a solution more than $15\%$ better. From a branch and bound algorithm perspective, this means that while we have not searched down fully or pruned every branch, we know that no branch has the potential of being more than $15\%$ better than the feasible solution that we have already found.
 
 Now let's move on to discussing the results. We will start with filtering out all the variables that have zero values so we can focus on the ones of interest - the states that are assigned to each week. Also, notice that a `dplyr` function was used to add state names to the data frame.
 
